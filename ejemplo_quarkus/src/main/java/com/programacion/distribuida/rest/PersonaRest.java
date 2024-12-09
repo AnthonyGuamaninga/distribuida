@@ -17,7 +17,6 @@ import java.util.List;
 @ApplicationScoped
 public class PersonaRest {
 
-
     @Inject
     PersonaRepository repository;
 
