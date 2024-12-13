@@ -13,10 +13,6 @@ repositories {
 
 var quarkusVersion = "3.17.0"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
 
 dependencies {
     implementation(enforcedPlatform("io.quarkus.platform:quarkus-bom:${quarkusVersion}"))
