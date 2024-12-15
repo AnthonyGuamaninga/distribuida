@@ -31,6 +31,12 @@ dependencies {
     implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation("org.postgresql:postgresql:42.7.4")
 
+    //Registro
+    implementation("io.smallrye.reactive:smallrye-mutiny-vertx-consul-client")
+
+    //Discovery
+    implementation("io.smallrye.stork:stork-service-discovery-consul")
+
 }
 
 tasks.withType<JavaCompile> {
