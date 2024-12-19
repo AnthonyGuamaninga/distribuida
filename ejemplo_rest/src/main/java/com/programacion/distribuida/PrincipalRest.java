@@ -1,11 +1,9 @@
 package com.programacion.distribuida;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.programacion.distribuida.db.Persona;
 import com.programacion.distribuida.service.PersonaService;
 import io.helidon.webserver.WebServer;
-import io.helidon.webserver.http.HttpRouting;
 import io.helidon.webserver.http.ServerRequest;
 import io.helidon.webserver.http.ServerResponse;
 import jakarta.enterprise.inject.se.SeContainer;

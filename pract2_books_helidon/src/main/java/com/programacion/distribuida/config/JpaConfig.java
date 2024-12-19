@@ -9,7 +9,6 @@ import jakarta.persistence.Persistence;
 
 @ApplicationScoped
 public class JpaConfig {
-
     EntityManagerFactory emf;
 
     @PostConstruct

@@ -10,7 +10,7 @@ import jakarta.persistence.Persistence;
 @ApplicationScoped
 public class JpaConfig {
 
-    EntityManagerFactory emf;
+    private EntityManagerFactory emf;
 
     @PostConstruct
     public void init() {
