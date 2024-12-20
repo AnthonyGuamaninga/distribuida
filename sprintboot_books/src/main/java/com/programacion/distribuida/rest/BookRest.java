@@ -21,12 +21,18 @@ public class BookRest {
     @Autowired
     private BookRepository bookRepository;
 
+
     private AuthorWebClient authorWebClient;
 
-    public BookRest(AuthorWebClient authorWebClient, BookRepository repository) {
+    @Autowired
+    public BookRest(AuthorWebClient authorWebClient) {
         this.authorWebClient = authorWebClient;
-        this.bookRepository = repository;
     }
+
+//    public BookRest(AuthorWebClient authorWebClient, BookRepository repository) {
+//        this.authorWebClient = authorWebClient;
+//        this.bookRepository = repository;
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getById(@PathVariable Integer id) {

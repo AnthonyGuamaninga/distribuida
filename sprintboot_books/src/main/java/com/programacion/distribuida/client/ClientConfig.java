@@ -1,21 +1,33 @@
 package com.programacion.distribuida.client;
 
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-@Configuration
+@Component
 public class ClientConfig {
 
     @Bean
     @LoadBalanced
-    public WebClient.Builder webClientBuilder() {
-        return WebClient.builder();
+    RestTemplateBuilder loadBalancedRestTemplateBuilder() {
+        return new RestTemplateBuilder();
     }
-//    public WebClient.Builder webClient(ReactorLoadBalancerExchangeFilterFunction loadBalancerClient ) {
-//        return WebClient.builder().filter(loadBalancerClient);
+
+
+
+//    webflux
+//    @Bean
+//    @LoadBalanced
+//    public WebClient.Builder webClientBuilder() {
+//        return WebClient.builder();
 //    }
+////    public WebClient.Builder webClient(ReactorLoadBalancerExchangeFilterFunction loadBalancerClient ) {
+////        return WebClient.builder().filter(loadBalancerClient);
+////    }
 }
+
+
