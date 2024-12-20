@@ -28,12 +28,19 @@ public class AuthorRest {
     public ResponseEntity<Author> findById(@PathVariable Integer id){
         System.out.printf("%s: Server %d\n", LocalDateTime.now(), port);
 
-        var author = repository.findById(id);
+        var author = repository.findById(id).get();
 
-        if(author.isEmpty()){
+        if(author == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(author.get());
+        String txt = String.format("[%d]-%s", port, author.getFirstName());
+
+        var ret = new Author();
+        ret.setId(author.getId());
+        ret.setFirstName(txt);
+        ret.setLastName(author.getLastName());
+
+        return ResponseEntity.ok(ret);
     }
 
     @GetMapping
@@ -42,33 +49,35 @@ public class AuthorRest {
     }
 
     @PostMapping
-    public ResponseEntity<Author> create(Author author){
+    public ResponseEntity<Author> create(@RequestBody Author author){
         repository.save(author);
         return ResponseEntity.status(HttpStatus.CREATED).body(author);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Author> update(@PathVariable Integer id, @RequestBody Author author) {
-        var optionalAuthor = repository.findById(id);
-        if (optionalAuthor.isEmpty()) {
+        var optionalAuthor = repository.findById(id).get();
+        if (optionalAuthor == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        author.setId(id); // Ensure the ID is maintained
-        repository.save(author);
+        optionalAuthor.setFirstName(author.getFirstName());
+        optionalAuthor.setLastName(author.getLastName());
 
-        return ResponseEntity.ok(author);
+        repository.save(optionalAuthor);
+
+        return ResponseEntity.ok(optionalAuthor);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        var exists = repository.existsById(id);
-        if (!exists) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        var author = repository.findById(id);
+        if (author.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         repository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("Author "+id+" deleted");
     }
 
 
