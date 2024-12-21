@@ -20,21 +20,4 @@ public class AuthorWebClient {
         return restTemplate.getForObject("http://app-authors/authors/{id}", AuthorDto.class, id);
     }
 
-
-
-//    //FLUX
-//    private WebClient.Builder webClient;
-//
-//    public AuthorWebClient(@LoadBalanced WebClient.Builder webClientB) {
-//        this.webClient = webClientB;
-//    }
-//
-//    public AuthorDto findAuthorById(Integer id) {
-//        return webClient.build()
-//                .get()
-//                .uri("http://springboot-authors/authors/{id}", id) // Nombre del servicio registrado en Consul
-//                .retrieve()
-//                .bodyToMono(AuthorDto.class)
-//                .block();
-//    }
 }

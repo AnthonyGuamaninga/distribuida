@@ -17,17 +17,6 @@ public class ClientConfig {
         return new RestTemplateBuilder();
     }
 
-
-
-//    webflux
-//    @Bean
-//    @LoadBalanced
-//    public WebClient.Builder webClientBuilder() {
-//        return WebClient.builder();
-//    }
-////    public WebClient.Builder webClient(ReactorLoadBalancerExchangeFilterFunction loadBalancerClient ) {
-////        return WebClient.builder().filter(loadBalancerClient);
-////    }
 }
 
 
