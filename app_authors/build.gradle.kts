@@ -33,9 +33,10 @@ dependencies {
 
     //Registro
     implementation("io.smallrye.reactive:smallrye-mutiny-vertx-consul-client")
-
     //Discovery
     implementation("io.smallrye.stork:stork-service-discovery-consul")
+    //Health
+    implementation("io.quarkus:quarkus-smallrye-health")
 
 }
 

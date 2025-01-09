@@ -1,4 +1,4 @@
-package com.programacion.distribuida.authors;
+package com.programacion.distribuida.books;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class AuthorsLifeCycle {
+public class BooksLifeCycle {
 
     @Inject
     @ConfigProperty(name = "consul.host", defaultValue = "127.0.0.1")
@@ -34,7 +34,7 @@ public class AuthorsLifeCycle {
     String serviceId;
 
     public void init(@Observes StartupEvent event, Vertx vertx) throws Exception {
-        System.out.println("Authors service starting...");
+        System.out.println("Books service starting...");
 
         ConsulClient client = ConsulClient.create(vertx,
                 new ConsulClientOptions()
@@ -48,16 +48,16 @@ public class AuthorsLifeCycle {
 
         client.registerServiceAndAwait(
                 new ServiceOptions()
-                        .setName("app-authors")
+                        .setName("app-books")
                         .setId(serviceId)
                         .setAddress(ipAddress.getHostAddress())
                         .setPort(appPort)
                         .setTags(
                                 List.of(
                                         "traefik.enable=true", //que la aplicaion se registre en treafik
-                                        "traefik.http.routers.router-app-authors.rule=PathPrefix(`/app-authors`)",
-                                        "traefik.http.routers.router-app-authors.middlewares=middleware-authors",
-                                        "traefik.http.middlewares.middleware-authors.stripPrefix.prefixes=/app-authors"
+                                        "traefik.http.routers.router-app-books.rule=PathPrefix(`/app-books`)",
+                                        "traefik.http.routers.router-app-books.middlewares=middleware-books",
+                                        "traefik.http.middlewares.middleware-books.stripPrefix.prefixes=/app-books"
                                 )
                         )
                         .setCheckOptions(
@@ -70,7 +70,7 @@ public class AuthorsLifeCycle {
     }
 
     public void stop(@Observes ShutdownEvent event, Vertx vertx) throws Exception {
-        System.out.println("Authors service stoping...");
+        System.out.println("Books service stoping...");
 
         ConsulClient client = ConsulClient.create(vertx,
                 new ConsulClientOptions()
