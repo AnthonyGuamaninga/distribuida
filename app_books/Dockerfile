@@ -1,5 +1,9 @@
 # docker build -t app-books .
 
+# docker login
+# docker build -t aaguamaninga/app-books .
+# docker push aaguamaninga/app-books
+
 FROM eclipse-temurin:21.0.5_11-jre-alpine
 
 RUN mkdir /app
