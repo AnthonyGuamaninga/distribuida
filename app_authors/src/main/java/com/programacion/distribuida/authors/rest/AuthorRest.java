@@ -9,6 +9,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,14 +28,17 @@ public class AuthorRest {
     @ConfigProperty(name = "quarkus.http.port")
     Integer port;
 
+
+
     @GET
     @Path("/{id}")
-    public Response findById(@PathParam("id") Integer id){
+    public Response findById(@PathParam("id") Integer id) throws UnknownHostException {
         System.out.printf("%s: Server %d\n", LocalDateTime.now(), port);
 
         var obj = repository.findById(id);
 
-        String txt = String.format("[%d]-%s", port, obj.getFirstName());
+        String ipAddress = InetAddress.getLocalHost().getHostAddress();
+        String txt = String.format("[%s:%d]-%s", ipAddress,port, obj.getFirstName());
 
         var ret = new Author();
         ret.setId(obj.getId());
