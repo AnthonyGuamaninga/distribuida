@@ -13,12 +13,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Path("/authors")
 @Produces("application/json")
 @Consumes("application/json")
 @ApplicationScoped
-@Transactional
+//@Transactional
 public class AuthorRest {
 
     @Inject
@@ -28,11 +29,19 @@ public class AuthorRest {
     @ConfigProperty(name = "quarkus.http.port")
     Integer port;
 
-
+AtomicInteger counter = new AtomicInteger(1);
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Integer id) throws UnknownHostException {
+
+        int value = counter.getAndDecrement();
+        if(value%5 != 0) {
+            String msg = String.format("Intento %d ==> error", value);
+            System.out.println("*********** "+msg);
+            throw new RuntimeException(msg);
+        }
+
         System.out.printf("%s: Server %d\n", LocalDateTime.now(), port);
 
         var obj = repository.findById(id);

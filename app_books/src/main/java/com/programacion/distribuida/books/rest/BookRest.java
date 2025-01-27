@@ -92,7 +92,23 @@ public class BookRest {
         if(obj.isEmpty()){
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok(obj.get()).build();
+
+        var book = obj.get();
+        var author = authorRest.findById(book.getAuthorId());
+
+        var dto = new BookDto();
+
+        dto.setId(book.getId());
+        dto.setTitle(book.getTitle());
+        dto.setIsbn(book.getIsbn());
+        dto.setPrice(book.getPrice());
+        dto.setAuthorName(author.getFirstName()+ " " + author.getLastName());
+
+        if(obj.isEmpty()){
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok(dto).build();
     }
 
     @POST

@@ -40,7 +40,7 @@ services:
       --tracing.addinternals=false
       --tracing.otlp=true
       --tracing.otlp.http=true
-      --tracing.otlp.http.endpoint=http://jeager:4318/v1/trace
+      --tracing.otlp.http.endpoint=http://jeager:4318
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -78,6 +78,7 @@ services:
       QUARKUS_HTTP_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
+      QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://jeager:4317
     expose:
       - 8080
     depends_on:
@@ -99,6 +100,7 @@ services:
       QUARKUS_HTTP_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
+      QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://jeager:4317
     expose:
       - 8080
     depends_on:

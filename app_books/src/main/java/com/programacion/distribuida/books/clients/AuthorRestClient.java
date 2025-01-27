@@ -4,6 +4,8 @@ import com.programacion.distribuida.books.dto.AuthorDto;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @Path("/authors")
@@ -16,7 +18,17 @@ public interface AuthorRestClient {
 
     @GET
     @Path("/{id}")
+    @Retry(maxRetries = 3)
+    @Fallback(fallbackMethod = "findByIdFallback")
     AuthorDto findById(@PathParam("id") Integer id);
 
+    default AuthorDto findByIdFallback(Integer id) {
+        var dto = new AuthorDto();
+        dto.setId(-1);
+        dto.setFirstName("noname");
+        dto.setLastName("");
+
+        return dto;
+    }
 
 }
