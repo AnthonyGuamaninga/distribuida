@@ -85,7 +85,7 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 3
+      replicas: 1
   books:
     image: aaguamaninga/app-books:latest
     labels:
@@ -107,5 +107,5 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 4
+      replicas: 2
 

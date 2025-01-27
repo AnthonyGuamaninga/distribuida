@@ -97,7 +97,6 @@ public class BookRest {
         var author = authorRest.findById(book.getAuthorId());
 
         var dto = new BookDto();
-
         dto.setId(book.getId());
         dto.setTitle(book.getTitle());
         dto.setIsbn(book.getIsbn());

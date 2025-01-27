@@ -29,13 +29,13 @@ public class AuthorRest {
     @ConfigProperty(name = "quarkus.http.port")
     Integer port;
 
-AtomicInteger counter = new AtomicInteger(1);
+    AtomicInteger counter = new AtomicInteger(1);
 
     @GET
     @Path("/{id}")
     public Response findById(@PathParam("id") Integer id) throws UnknownHostException {
 
-        int value = counter.getAndDecrement();
+        int value = counter.getAndIncrement();
         if(value%5 != 0) {
             String msg = String.format("Intento %d ==> error", value);
             System.out.println("*********** "+msg);

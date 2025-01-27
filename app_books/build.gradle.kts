@@ -49,8 +49,9 @@ dependencies {
 
     //Tracing
     implementation("io.quarkus:quarkus-opentelemetry")
-//    implementation("io.opentelemetry.javaagent:opentelemetry-javaagent:VERSION")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
 
+    //Fault tolerance
     implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
 
 }

@@ -44,6 +44,7 @@ dependencies {
 
     //Tracing
     implementation("io.quarkus:quarkus-opentelemetry")
+    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
 
 }
 
