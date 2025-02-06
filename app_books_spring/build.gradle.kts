@@ -33,9 +33,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
 
-    // Tracing
-    implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
-    implementation("org.springframework.cloud:spring-cloud-sleuth-otel-autoconfigure")
+    // Tracing con Micrometer y OpenTelemetry
+    implementation("io.micrometer:micrometer-tracing")
+    implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
     // Tolerancia a fallos
     implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")

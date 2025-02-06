@@ -10,8 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @RequestMapping("/authors")
@@ -24,8 +27,18 @@ public class AuthorRest {
     @Value("${server.port}")
     Integer port;
 
+    AtomicInteger counter = new AtomicInteger(1);
+
     @GetMapping("/{id}")
-    public ResponseEntity<Author> findById(@PathVariable Integer id){
+    public ResponseEntity<Author> findById(@PathVariable Integer id) throws UnknownHostException {
+
+        int value = counter.getAndIncrement();
+        if(value%5 != 0) {
+            String msg = String.format("Intento %d ==> error", value);
+            System.out.println("*********** "+msg);
+            throw new RuntimeException(msg);
+        }
+
         System.out.printf("%s: Server %d\n", LocalDateTime.now(), port);
 
         var author = repository.findById(id).get();
@@ -33,7 +46,9 @@ public class AuthorRest {
         if(author == null){
             return ResponseEntity.notFound().build();
         }
-        String txt = String.format("[%d]-%s", port, author.getFirstName());
+        String ipAddress = InetAddress.getLocalHost().getHostAddress();
+        String txt = String.format("[%s:%d]-%s", ipAddress,port, author.getFirstName());
+
 
         var ret = new Author();
         ret.setId(author.getId());

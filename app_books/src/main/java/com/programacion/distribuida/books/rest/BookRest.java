@@ -103,10 +103,6 @@ public class BookRest {
         dto.setPrice(book.getPrice());
         dto.setAuthorName(author.getFirstName()+ " " + author.getLastName());
 
-        if(obj.isEmpty()){
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
         return Response.ok(dto).build();
     }
 
