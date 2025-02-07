@@ -1,4 +1,6 @@
 # docker build -t app-authors .
+
+# docker login
 # docker build -t aaguamaninga/app-authors .
 # docker push aaguamaninga/app-authors
 

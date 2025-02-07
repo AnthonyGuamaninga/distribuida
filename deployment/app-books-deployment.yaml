@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-authors
+  name: app-books
   labels:
-    app: app-authors
+    app: app-books
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app: app-authors
@@ -15,13 +15,13 @@ spec:
       labels:
         app: app-authors
     spec:
-      restartPolicy: Always
       containers:
-        - name: app-authors
-          image: docker.io/aaguamaninga/app-authors:latest
+        - name: app-books
+          image: docker.io/aaguamaninga/app-books:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8080
+            - name: app-books
+              containerPort: 8080
               protocol: TCP
           env:
             - name: QUARKUS_DATASOURCE_JDBC_URL
@@ -36,15 +36,16 @@ spec:
               value: consul
             - name: CONSUL_PORT
               value: "8500"
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-authors-services
+  name: app-books-services
 spec:
   type: ClusterIP
   selector:
-    app: app-authors
+    app: app-books
   ports:
     - protocol: TCP
       port: 8080
