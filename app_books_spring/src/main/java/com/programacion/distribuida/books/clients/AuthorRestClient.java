@@ -2,8 +2,6 @@ package com.programacion.distribuida.books.clients;
 
 import com.programacion.distribuida.books.dto.AuthorDto;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.retry.annotation.Retry;
-import org.springframework.context.annotation.Fallback;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
