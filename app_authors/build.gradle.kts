@@ -38,14 +38,17 @@ dependencies {
     //Health
     implementation("io.quarkus:quarkus-smallrye-health")
 
-    //Metrics
-    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
-    implementation("io.quarkus:quarkus-jackson")
+//    //Metrics
+//    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
+//    implementation("io.quarkus:quarkus-jackson")
+//
+//    //Tracing
+//    implementation("io.quarkus:quarkus-opentelemetry")
+//    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
 
-    //Tracing
-    implementation("io.quarkus:quarkus-opentelemetry")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
-
+    //Control de versiones
+    implementation("io.quarkus:quarkus-flyway")
+    implementation("org.flywaydb:flyway-database-postgresql")
 }
 
 tasks.withType<JavaCompile> {

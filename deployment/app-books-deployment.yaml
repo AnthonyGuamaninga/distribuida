@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-books
+  labels:
+    app: app-books
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-books
+  template:
+    metadata:
+      name: app-books
+      labels:
+        app: app-books
+    spec:
+      containers:
+        - name: app-books
+          image: docker.io/aaguamaninga/app-books:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              value: jdbc:postgresql://distribuida-ag.postgres.database.azure.com:5432/distribuida
+            - name: QUARKUS_DATASOURCE_USERNAME
+              value: distribuida
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              value: Azure10.
+            - name: QUARKUS_HTTP_PORT
+              value: "8080"
+            - name: CONSUL_HOST
+              value: consul
+            - name: CONSUL_PORT
+              value: "8500"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-books-services
+spec:
+  type: ClusterIP
+  selector:
+    app: app-books
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      

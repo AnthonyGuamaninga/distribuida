@@ -44,12 +44,12 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-health")
 
     //Metrics
-    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
-    implementation("io.quarkus:quarkus-jackson")
-
-    //Tracing
-    implementation("io.quarkus:quarkus-opentelemetry")
-    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
+//    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
+//    implementation("io.quarkus:quarkus-jackson")
+//
+//    //Tracing
+//    implementation("io.quarkus:quarkus-opentelemetry")
+//    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
 
     //Fault tolerance
     implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
