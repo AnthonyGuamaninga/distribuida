@@ -4,7 +4,6 @@ import com.programacion.distribuida.books.clients.AuthorRestClient;
 import com.programacion.distribuida.books.db.Book;
 import com.programacion.distribuida.books.dto.BookDto;
 import com.programacion.distribuida.books.repo.BookRepository;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,7 @@ public class BookRest {
 
     @Autowired
     public BookRest(RestClient.Builder restClientBuilder) { // CONSTRUCTOR
-        RestClient restClient = restClientBuilder.baseUrl("http://app-authors-spring")
+        RestClient restClient = restClientBuilder.baseUrl("http://app-authors")
                 .build();
 
         RestClientAdapter adapter = RestClientAdapter.create(restClient);

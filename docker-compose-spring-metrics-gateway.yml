@@ -68,9 +68,9 @@ services:
     image: aaguamaninga/app-authors-spring:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.rapp-authors.rule=PathPrefix(`/app-authors1`)"
-      - "traefik.http.routers.rapp-authors.middlewares=mauthors"
-      - "traefik.http.middlewares.mauthors.stripPrefix.prefixes=/app-authors1"
+      - "traefik.http.routers.app-authors.rule=PathPrefix(`/app-authors`)"
+      - "traefik.http.routers.app-authors.middlewares=mauthors"
+      - "traefik.http.middlewares.mauthors.stripPrefix.prefixes=/app-authors"
     environment:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
@@ -89,9 +89,9 @@ services:
     image: aaguamaninga/app-books-spring:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.rapp-books.rule=PathPrefix(`/app-books1`)"
-      - "traefik.http.routers.rapp-books.middlewares=mbooks"
-      - "traefik.http.middlewares.mbooks.stripPrefix.prefixes=/app-books1"
+      - "traefik.http.routers.app-books.rule=PathPrefix(`/app-books`)"
+      - "traefik.http.routers.app-books.middlewares=mbooks"
+      - "traefik.http.middlewares.mbooks.stripPrefix.prefixes=/app-books"
     environment:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
@@ -105,5 +105,5 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 4
+      replicas: 1
 

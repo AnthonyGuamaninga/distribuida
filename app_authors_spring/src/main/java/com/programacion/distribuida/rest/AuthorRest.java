@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -33,10 +34,10 @@ public class AuthorRest {
     public ResponseEntity<Author> findById(@PathVariable Integer id) throws UnknownHostException {
 
         int value = counter.getAndIncrement();
-        if(value%5 != 0) {
+        if(value%2 != 0) {
             String msg = String.format("Intento %d ==> error", value);
             System.out.println("*********** "+msg);
-            throw new RuntimeException(msg);
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, msg);
         }
 
         System.out.printf("%s: Server %d\n", LocalDateTime.now(), port);
@@ -44,6 +45,7 @@ public class AuthorRest {
         var author = repository.findById(id).get();
 
         if(author == null){
+            System.out.println("Author no encontrado");
             return ResponseEntity.notFound().build();
         }
         String ipAddress = InetAddress.getLocalHost().getHostAddress();
