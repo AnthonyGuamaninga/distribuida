@@ -37,15 +37,20 @@ spec:
             - name: CONSUL_PORT
               value: "8500"
 ---
-apiVersion: v1
-kind: Service
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
 metadata:
-  name: app-authors-services
+  name: app-books-hpa
 spec:
-  type: ClusterIP
-  selector:
-    app: app-authors
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+  scaleTargetRef:
+    kind: Deployment
+    name: app-books
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: AverageValue
+          averageUtilization: 50

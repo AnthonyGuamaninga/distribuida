@@ -22,6 +22,10 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "64Mi"
           env:
             - name: QUARKUS_DATASOURCE_JDBC_URL
               value: jdbc:postgresql://distribuida-ag.postgres.database.azure.com:5432/distribuida
@@ -37,16 +41,21 @@ spec:
               value: "8500"
       restartPolicy: Always
 ---
-apiVersion: v1
-kind: Service
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
 metadata:
-  name: app-books-services
+  name: app-books-hpa
 spec:
-  type: ClusterIP
-  selector:
-    app: app-books
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-      
+  scaleTargetRef:
+    kind: Deployment
+    name: app-books
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: AverageValue
+          averageUtilization: 50
+
