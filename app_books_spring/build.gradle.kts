@@ -39,9 +39,7 @@ dependencies {
     implementation("io.zipkin.reporter2:zipkin-reporter-brave")
 
     // Tolerancia a fallos
-//    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
-    implementation("org.springframework.retry:spring-retry")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
 }
 
 dependencyManagement {

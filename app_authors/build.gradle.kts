@@ -46,7 +46,7 @@ dependencies {
 //    implementation("io.quarkus:quarkus-opentelemetry")
 //    implementation("io.opentelemetry.instrumentation:opentelemetry-jdbc")
 
-    //Control de versiones
+    //Control de versiones DB
     implementation("io.quarkus:quarkus-flyway")
     implementation("org.flywaydb:flyway-database-postgresql")
 }

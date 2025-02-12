@@ -13,8 +13,6 @@
             <option value="$PROJECT_DIR$/app_authors_spring" />
             <option value="$PROJECT_DIR$/app_books" />
             <option value="$PROJECT_DIR$/app_books_spring" />
-            <option value="$PROJECT_DIR$/sprintboot_authors" />
-            <option value="$PROJECT_DIR$/sprintboot_books" />
           </set>
         </option>
       </GradleProjectSettings>

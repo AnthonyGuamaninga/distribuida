@@ -99,11 +99,15 @@ services:
       SPRING_HTTP_PORT: 8080
       SPRING_CLOUD_CONSUL_HOST: consul
       SPRING_CLOUD_CONSUL_PORT: 8500
+#      SPRING_CLOUD_LOADBALANCER_ENABLED: true
+#      RESILIENCE4J_RETRY_INSTANCES_AUTHORSSERVICERETRY_MAXATTEMPTS: 5
+#      RESILIENCE4J_RETRY_INSTANCES_AUTHORSSERVICERETRY_WAITDURATION: 2000ms
     expose:
       - 8080
     depends_on:
       - dbserver
       - consul
+      - authors
     deploy:
       replicas: 1
 

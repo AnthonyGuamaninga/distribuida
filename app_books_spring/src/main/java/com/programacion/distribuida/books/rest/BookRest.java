@@ -1,9 +1,12 @@
 package com.programacion.distribuida.books.rest;
 
 import com.programacion.distribuida.books.clients.AuthorRestClient;
+import com.programacion.distribuida.books.clients.AuthorService;
 import com.programacion.distribuida.books.db.Book;
+import com.programacion.distribuida.books.dto.AuthorDto;
 import com.programacion.distribuida.books.dto.BookDto;
 import com.programacion.distribuida.books.repo.BookRepository;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -27,24 +31,33 @@ public class BookRest {
     //@RestClient
     //AuthorRestClient client;
 
+//    @Autowired
+//    private RestClient.Builder restClientBuilder;
+//
+//    private final AuthorRestClient service;
+//
+//    @Autowired
+//    public BookRest(RestClient.Builder restClientBuilder) { // CONSTRUCTOR
+//        RestClient restClient = restClientBuilder.baseUrl("http://app-authors")
+//                .build();
+//
+//        RestClientAdapter adapter = RestClientAdapter.create(restClient);
+//        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+//        this.service = factory.createClient(AuthorRestClient.class);
+//    }
+
     @Autowired
-    private RestClient.Builder restClientBuilder;
+    private AuthorService service;
 
-    private final AuthorRestClient service;
+//    @Autowired
+//    public BookRest(AuthorService authorService) {
+//        this.service = authorService;
+//    }
 
-    @Autowired
-    public BookRest(RestClient.Builder restClientBuilder) { // CONSTRUCTOR
-        RestClient restClient = restClientBuilder.baseUrl("http://app-authors")
-                .build();
-
-        RestClientAdapter adapter = RestClientAdapter.create(restClient);
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
-        this.service = factory.createClient(AuthorRestClient.class);
-    }
-
+//    @Retry(name = "authorsServiceRetry", fallbackMethod = "findByIdFallback")
     @GetMapping
     public List<BookDto> findAll() {
-
+        System.out.println("---NUEVO----");
 //        var restClient = restClientBuilder.baseUrl("http://app-authors-spring")
 //                .build();
 //
@@ -79,6 +92,7 @@ public class BookRest {
                 .toList();
     }
 
+//    @Retry(name = "authorsServiceRetry", fallbackMethod = "findByIdFallback")
     @GetMapping(path = "/{id}")
     public ResponseEntity<BookDto> findById(@PathVariable("id") Integer id) {
         var obj = repository.findById(id);
@@ -99,6 +113,26 @@ public class BookRest {
 
         return ResponseEntity.ok(dto);
     }
+
+//    public ResponseEntity<BookDto> findByIdFallback(Integer id, Throwable t) {
+//        System.out.println("Fallback ejecutado debido a: " + t.getMessage());
+//
+//        var obj = repository.findById(id);
+//
+//        if (obj.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//        var book = obj.get();
+//
+//        var dto = new BookDto();
+//        dto.setId(book.getId());
+//        dto.setTitle(book.getTitle());
+//        dto.setIsbn(book.getIsbn());
+//        dto.setPrice(book.getPrice());
+//        dto.setAuthorName(">> Noname <<");
+//
+//        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(dto);
+//    }
 
 
     @PostMapping

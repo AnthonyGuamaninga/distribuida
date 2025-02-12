@@ -33,7 +33,7 @@ metadata:
 spec:
   selector:
     app: consul
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: consul
       port: 8500

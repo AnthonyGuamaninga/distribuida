@@ -34,7 +34,7 @@ public class AuthorRest {
     public ResponseEntity<Author> findById(@PathVariable Integer id) throws UnknownHostException {
 
         int value = counter.getAndIncrement();
-        if(value%2 != 0) {
+        if(value%5 != 0) {
             String msg = String.format("Intento %d ==> error", value);
             System.out.println("*********** "+msg);
             throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, msg);
