@@ -30,7 +30,6 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     // Métricas
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
 
     // Tracing con Micrometer y OpenTelemetry

@@ -71,13 +71,16 @@ services:
       - "traefik.http.routers.app-authors.rule=PathPrefix(`/app-authors`)"
       - "traefik.http.routers.app-authors.middlewares=mauthors"
       - "traefik.http.middlewares.mauthors.stripPrefix.prefixes=/app-authors"
+#      - "traefik.http.services.app-authors.loadbalancer.server.port=8080"
     environment:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_DATASOURCE_JDBC_URL: jdbc:postgresql://dbserver:5432/distribuida
       SPRING_HTTP_PORT: 8080
-      CONSUL_HOST: consul
-      CONSUL_PORT: 8500
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500
+#      CONSUL_HOST: consul
+#      CONSUL_PORT: 8500
     expose:
       - 8080
     depends_on:
@@ -100,8 +103,8 @@ services:
       SPRING_CLOUD_CONSUL_HOST: consul
       SPRING_CLOUD_CONSUL_PORT: 8500
 #      SPRING_CLOUD_LOADBALANCER_ENABLED: true
-#      RESILIENCE4J_RETRY_INSTANCES_AUTHORSSERVICERETRY_MAXATTEMPTS: 5
-#      RESILIENCE4J_RETRY_INSTANCES_AUTHORSSERVICERETRY_WAITDURATION: 2000ms
+#      CONSUL_HOST: consul
+#      CONSUL_PORT: 8500
     expose:
       - 8080
     depends_on:

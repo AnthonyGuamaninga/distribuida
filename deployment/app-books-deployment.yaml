@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: app-books
-          image: docker.io/jaimesalvador/app-books:latest
+          image: docker.io/aaguamaninga/app-books:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -28,11 +28,14 @@ spec:
 #              memory: "64Mi"
           env:
             - name: QUARKUS_DATASOURCE_JDBC_URL
-              value: jdbc:postgresql://aaguamaninga-pgserver.postgres.database.azure.com:5432/distribuida
+              value: jdbc:postgresql://localhost:54321/distribuida
+#              value: jdbc:postgresql://aaguamaninga-pgserver.postgres.database.azure.com:5432/distribuida
             - name: QUARKUS_DATASOURCE_USERNAME
-              value: distribuida
+              value: postgres
+#              value: distribuida
             - name: QUARKUS_DATASOURCE_PASSWORD
-              value: Azure10.
+              value: postgres
+#              value: Azure10.
             - name: QUARKUS_HTTP_PORT
               value: "8080"
             - name: CONSUL_HOST
