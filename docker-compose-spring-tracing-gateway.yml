@@ -68,9 +68,9 @@ services:
     image: aaguamaninga/app-authors-spring:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.rapp-authors.rule=PathPrefix(`/app-authors-spring`)"
+      - "traefik.http.routers.rapp-authors.rule=PathPrefix(`/app-authors`)"
       - "traefik.http.routers.rapp-authors.middlewares=mauthors"
-      - "traefik.http.middlewares.mauthors.stripPrefix.prefixes=/app-authors-spring"
+      - "traefik.http.middlewares.mauthors.stripPrefix.prefixes=/app-authors"
     environment:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
@@ -78,29 +78,7 @@ services:
       SERVER_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
-      SPRING_OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
-    expose:
-      - 8080
-    depends_on:
-      - dbserver
-      - consul
-    deploy:
-      replicas: 1
-  books:
-    image: aaguamaninga/app-books-spring:latest
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.rapp-books.rule=PathPrefix(`/app-books-spring`)"
-      - "traefik.http.routers.rapp-books.middlewares=mbooks"
-      - "traefik.http.middlewares.mbooks.stripPrefix.prefixes=/app-books-spring"
-    environment:
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_DATASOURCE_JDBC_URL: jdbc:postgresql://dbserver:5432/distribuida
-      SPRING_HTTP_PORT: 8080
-      CONSUL_HOST: consul
-      CONSUL_PORT: 8500
-      QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+      MANAGEMENT_OPENTELEMETRY_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
     expose:
       - 8080
     depends_on:
@@ -108,4 +86,26 @@ services:
       - consul
     deploy:
       replicas: 2
+  books:
+    image: aaguamaninga/app-books-spring:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rapp-books.rule=PathPrefix(`/app-books`)"
+      - "traefik.http.routers.rapp-books.middlewares=mbooks"
+      - "traefik.http.middlewares.mbooks.stripPrefix.prefixes=/app-books"
+    environment:
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_JDBC_URL: jdbc:postgresql://dbserver:5432/distribuida
+      SPRING_HTTP_PORT: 8080
+      CONSUL_HOST: consul
+      CONSUL_PORT: 8500
+      MANAGEMENT_OPENTELEMETRY_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
+    expose:
+      - 8080
+    depends_on:
+      - dbserver
+      - consul
+    deploy:
+      replicas: 1
 
