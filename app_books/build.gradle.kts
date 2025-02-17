@@ -54,6 +54,9 @@ dependencies {
     //Fault tolerance
     implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
 
+    // openapi
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+
 }
 
 tasks.withType<JavaCompile> {

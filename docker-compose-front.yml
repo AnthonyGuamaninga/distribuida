@@ -85,7 +85,7 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 1
+      replicas: 2
   books:
     image: aaguamaninga/app-books:latest
     labels:
@@ -111,11 +111,11 @@ services:
       - dbserver
       - consul
     deploy:
-      replicas: 2
+      replicas: 1
   vue-app:
     image: aaguamaninga/app-books-front:latest
     ports:
-      - "8081:80"
+      - "8087:8082"
     expose:
-      - 8081
+      - 8082
     restart: always
