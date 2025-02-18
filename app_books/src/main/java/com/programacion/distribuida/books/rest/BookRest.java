@@ -2,24 +2,24 @@ package com.programacion.distribuida.books.rest;
 
 import com.programacion.distribuida.books.clients.AuthorRestClient;
 import com.programacion.distribuida.books.db.Book;
-import com.programacion.distribuida.books.dto.AuthorDto;
 import com.programacion.distribuida.books.dto.BookDto;
 import com.programacion.distribuida.books.repo.BookRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.rest.client.RestClientBuilder;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
 
 @Path("/books")
+@Tag(name = "Books", description = "Gestiona información sobre books")
 @Produces("application/json")
 @Consumes("application/json")
 @ApplicationScoped
@@ -34,36 +34,18 @@ public class BookRest {
     AuthorRestClient authorRest;
 
     @GET
+    @Operation(
+            summary = "Obtener todos los libros",
+            description = "Devuelve una lista de libros disponibles"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Lista de libros obtenida correctamente",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = BookDto.class))
+    )
     public List<BookDto> findAll(){
-        // version 1
-//        return repository.findAll()
-//                .list();
-
-        // version 2 ----------
-//        Client client = ClientBuilder.newClient();
-//
-//        return  repository.streamAll()
-//                .map( book -> {
-//                    System.out.println("Buscando author con id: "+book.getAuthorId());
-//                    var author = client.target(authorsServer)
-//                            .path("/authors/{id}")
-//                            .resolveTemplate("id", 1)
-//                            .request(MediaType.APPLICATION_JSON)
-//                            .get(AuthorDto.class);
-//                    var bookDto = new BookDto();
-//                    bookDto.setId(book.getId());
-//                    bookDto.setTitle(book.getTitle());
-//                    bookDto.setIsbn(book.getIsbn());
-//                    bookDto.setPrice(book.getPrice());
-//                    bookDto.setAuthorName(author.getFirstName() + " " + author.getLastName());
-//                    return bookDto;
-//                })
-//                .toList();
-        //version 3 --------------
-
-
         // version 4 ---------------------------
-
         return  repository.streamAll()
                 .map( book -> {
                     System.out.println("Buscando author con id: "+book.getAuthorId());
@@ -79,12 +61,20 @@ public class BookRest {
                     return bookDto;
                 })
                 .toList();
-
-
-
+        
     }
 
     @GET
+    @Operation(
+            summary = "Obtener un libro por su id (identidicador)",
+            description = "Se realiza la busqueda de un Book por su id"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Busqueda por id obtenida correctamente",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = BookDto.class))
+    )
     @Path("/{id}")
     public Response findById(@PathParam("id") Integer id){
         var obj = repository.findByIdOptional(id);
@@ -107,12 +97,32 @@ public class BookRest {
     }
 
     @POST
+    @Operation(
+            summary = "Registrar un libro",
+            description = "Se envia un json con los atributos que posee book"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Book registrado correctamente",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Book.class))
+    )
     public Response create(Book book){
         repository.persist(book);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
+    @Operation(
+            summary = "Actulizar book",
+            description = "Se envía un objeto es formato json para actualizar a un book ya existente a través de su id"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Book actualizado satisfactoria",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Book.class))
+    )
     @Path("/{id}")
     public Response update(@PathParam("id") Integer id, Book book){
         var obj = repository.update(id, book);
@@ -125,6 +135,16 @@ public class BookRest {
     }
 
     @DELETE
+    @Operation(
+            summary = "Elimina un book",
+            description = "Se envia por el path el id del book que se desea eliminar"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Book eliminado de forma satisfactoria",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Book.class))
+    )
     @Path("/{id}")
     public Response delete(@PathParam("id") Integer id){
         var obj = repository.deleteById(id);

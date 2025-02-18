@@ -28,7 +28,7 @@ spec:
           #              memory: "64Mi"
           env:
             - name: QUARKUS_DATASOURCE_JDBC_URL
-              value: jdbc:postgresql://localhost:54321/distribuida
+              value: jdbc:postgresql://dbserver:5432/distribuida
             #              value: jdbc:postgresql://aaguamaninga-pgserver.postgres.database.azure.com:5432/distribuida
             - name: QUARKUS_DATASOURCE_USERNAME
               value: postgres

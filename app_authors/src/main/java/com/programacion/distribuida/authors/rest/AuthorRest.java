@@ -8,6 +8,11 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -16,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Path("/authors")
+@Tag(name = "Authors", description = "Gestiona información sobre authors")
 @Produces("application/json")
 @Consumes("application/json")
 @ApplicationScoped
@@ -32,6 +38,16 @@ public class AuthorRest {
     AtomicInteger counter = new AtomicInteger(1);
 
     @GET
+    @Operation(
+            summary = "Obtener un autor por su id (identidicador)",
+            description = "Se realiza la busqueda de un Author por su id"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Author obtenido correctamente",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Author.class))
+    )
     @Path("/{id}")
     public Response findById(@PathParam("id") Integer id) throws UnknownHostException {
 
@@ -58,18 +74,48 @@ public class AuthorRest {
     }
 
     @GET
+    @Operation(
+            summary = "Obtener todos los autores",
+            description = "Devuelve una lista de autores disponibles"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Lista de autores obtenida correctamente",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Author.class))
+    )
     public List<Author> findAll(){
         return repository.findAll()
                 .list();
     }
 
     @POST
+    @Operation(
+            summary = "Registrar un autor",
+            description = "Se envia un json con los atributos que posee author"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Registro de autor realizado correctamente",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Author.class))
+    )
     public Response create(Author author){
         repository.persist(author);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
+    @Operation(
+            summary = "Actulizar autor",
+            description = "Se envía un objeto es formato json para actualizar a un author ya existente a través de su id"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Actulización de author satisfactoria",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Author.class))
+    )
     @Path("/{id}")
     public Response update(@PathParam("id") Integer id, Author author){
         var obj = repository.update(id, author);
@@ -82,6 +128,16 @@ public class AuthorRest {
     }
 
     @DELETE
+    @Operation(
+            summary = "Elimina un author",
+            description = "Se envia por el path el id del author que se desea eliminar"
+    )
+    @APIResponse(
+            responseCode = "200",
+            description = "Author eliminado de forma satisfactoria",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Author.class))
+    )
     @Path("/{id}")
     public Response delete(@PathParam("id") Integer id){
         var obj = repository.deleteById(id);
