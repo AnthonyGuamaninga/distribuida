@@ -1,4 +1,4 @@
-#docker compose -f docker-compose-prueba.yml up -d
+# docker compose -f docker-compose-prueba.yml up -d
 
 version: '3.3'
 services:
@@ -61,7 +61,6 @@ services:
       - "traefik.http.routers.rapp-authors.rule=PathPrefix(`/app-authors1`)"
       - "traefik.http.routers.rapp-authors.middlewares=mauthors"
       - "traefik.http.middlewares.mauthors.stripPrefix.prefixes=/app-authors1"
-      - "traefik.http.routers.swagger-authors.rule=PathPrefix(`/app-authors1/swagger-ui`)"
     environment:
       QUARKUS_DATASOURCE_USERNAME: postgres
       QUARKUS_DATASOURCE_PASSWORD: postgres
@@ -85,7 +84,6 @@ services:
       - "traefik.http.routers.rapp-books.rule=PathPrefix(`/app-books1`)"
       - "traefik.http.routers.rapp-books.middlewares=mbooks"
       - "traefik.http.middlewares.mbooks.stripPrefix.prefixes=/app-books1"
-      - "traefik.http.routers.swagger-books.rule=PathPrefix(`/app-books1/swagger-ui`)"
     environment:
       QUARKUS_DATASOURCE_USERNAME: postgres
       QUARKUS_DATASOURCE_PASSWORD: postgres
@@ -93,8 +91,8 @@ services:
       QUARKUS_HTTP_PORT: 8080
       CONSUL_HOST: consul
       CONSUL_PORT: 8500
-#    ports:
-#      - "8081:8080"
+    ports:
+      - "8083:8080"
     expose:
       - 8080
     depends_on:

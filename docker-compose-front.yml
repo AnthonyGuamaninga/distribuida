@@ -1,4 +1,4 @@
-#docker compose -f docker-compose-front.yml up -d
+# docker compose -f docker-compose-front.yml up -d
 
 version: '3.3'
 services:
@@ -65,7 +65,7 @@ services:
     depends_on:
       - proxy
   authors:
-    image: aaguamaninga/app-authors:latest
+    image: aaguamaninga/app-authors-prueba:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.rapp-authors.rule=PathPrefix(`/app-authors1`)"
@@ -87,7 +87,7 @@ services:
     deploy:
       replicas: 2
   books:
-    image: aaguamaninga/app-books:latest
+    image: aaguamaninga/app-books-prueba:latest
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.rapp-books.rule=PathPrefix(`/app-books1`)"
@@ -113,9 +113,9 @@ services:
     deploy:
       replicas: 1
   vue-app:
-    image: aaguamaninga/app-books-front:latest
+    image: aaguamaninga/app-front-vue:latest
     ports:
-      - "8087:8082"
+      - "8081:80"
     expose:
-      - 8082
+      - 8081
     restart: always
